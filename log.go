@@ -8,18 +8,18 @@ import (
 
 func NewLogger(name string, out io.Writer) *Logger {
 
-    base := newBase(name, out)
+	base := newBase(name, out)
 
 	return &Logger{
-        base: base,
-        level: DebugLevel,
-    }
+		base:  base,
+		level: DebugLevel,
+	}
 }
 
 // Logger logs message to io.Writer at various log levels.
 type Logger struct {
-	base Base
-	mu sync.Mutex
+	base  Base
+	mu    sync.Mutex
 	level Level
 }
 
@@ -39,8 +39,10 @@ func (self *Logger) SetLevel(v Level) {
 
 // checkLevel reports whether logger can log at level v.
 func (self *Logger) checkLevel(v Level) bool {
+
 	self.mu.Lock()
 	defer self.mu.Unlock()
+
 	return v >= self.level
 }
 

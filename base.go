@@ -1,10 +1,10 @@
 package log
 
 import (
-	"io"
-	"os"
 	"fmt"
+	"io"
 	stdlog "log"
+	"os"
 )
 
 type Base interface {
@@ -30,10 +30,10 @@ type base struct {
 }
 
 func newBase(name string, out io.Writer) *base {
-    
+
 	prefix := fmt.Sprintf("%s: pid=%d ", name, os.Getpid())
 
-    return &base{
+	return &base{
 		stdlog.New(out, prefix, stdlog.Ldate|stdlog.Ltime),
 	}
 }

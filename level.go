@@ -23,8 +23,6 @@ const (
 	FatalLevel
 )
 
-// String is part of the fmt.Stringer interface.
-//
 // Used for testing and debugging purposes.
 func (self Level) String() string {
 

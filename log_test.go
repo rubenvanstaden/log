@@ -1,16 +1,46 @@
 package log_test
 
 import (
-	"os"
+	"bytes"
+	"fmt"
+	"regexp"
 	"testing"
 
 	"github.com/rubenvanstaden/log"
+	"github.com/rubenvanstaden/test"
 )
 
-func TestUnitInfo(t *testing.T) {
+const (
+	rgxPID  = `[0-9]+`
+	rgxdate = `[0-9][0-9][0-9][0-9]/[0-9][0-9]/[0-9][0-9]`
+	rgxtime = `[0-9][0-9]:[0-9][0-9]:[0-9][0-9]`
+)
 
-    logger := log.NewLogger("taskq", os.Stderr)
+type tester struct {
+	message string
+	pattern string // regexp that log output must match
+}
 
-    logger.Info("Hello world")
+func TestUnitDebug(t *testing.T) {
 
+	tests := []tester{
+		{
+			message: "hello, world!",
+			pattern: fmt.Sprintf("test: pid=%s %s %s DEBUG: hello, world!\n$", rgxPID, rgxdate, rgxtime),
+		},
+	}
+
+	for _, tc := range tests {
+
+		var buf bytes.Buffer
+
+		logger := log.NewLogger("test", &buf)
+		logger.Debug(tc.message)
+
+		act := buf.String()
+
+		matched, err := regexp.MatchString(tc.pattern, act)
+		test.Ok(t, err)
+		test.Assert(t, matched, fmt.Sprintf("pattern match failed: %q", act))
+	}
 }
