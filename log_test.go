@@ -21,7 +21,7 @@ type tester struct {
 	pattern string // regexp that log output must match
 }
 
-func TestUnitDebug(t *testing.T) {
+func TestUnit_Debug(t *testing.T) {
 
 	tests := []tester{
 		{
@@ -43,4 +43,100 @@ func TestUnitDebug(t *testing.T) {
 		test.Ok(t, err)
 		test.Assert(t, matched, fmt.Sprintf("pattern match failed: %q", act))
 	}
+}
+
+func TestUnitInfo(t *testing.T) {
+
+	// tests := []tester{
+	// 	{
+	// 		message: "hello, world!",
+	// 		pattern: fmt.Sprintf("test: pid=%s %s %s DEBUG: hello, world!\n$", rgxPID, rgxdate, rgxtime),
+	// 	},
+	// }
+	//
+	// for _, tc := range tests {
+	//
+	// 	var buf bytes.Buffer
+	//
+	// 	logger := log.NewLogger("test", &buf)
+	// 	logger.Debug(tc.message)
+	//
+	// 	act := buf.String()
+	//
+	// 	matched, err := regexp.MatchString(tc.pattern, act)
+	// 	test.Ok(t, err)
+	// 	test.Assert(t, matched, fmt.Sprintf("pattern match failed: %q", act))
+	//     }
+}
+
+func TestUnitWarn(t *testing.T) {
+
+	// tests := []tester{
+	// 	{
+	// 		message: "hello, world!",
+	// 		pattern: fmt.Sprintf("test: pid=%s %s %s DEBUG: hello, world!\n$", rgxPID, rgxdate, rgxtime),
+	// 	},
+	// }
+	//
+	// for _, tc := range tests {
+	//
+	// 	var buf bytes.Buffer
+	//
+	// 	logger := log.NewLogger("test", &buf)
+	// 	logger.Debug(tc.message)
+	//
+	// 	act := buf.String()
+	//
+	// 	matched, err := regexp.MatchString(tc.pattern, act)
+	// 	test.Ok(t, err)
+	// 	test.Assert(t, matched, fmt.Sprintf("pattern match failed: %q", act))
+	//     }
+}
+
+func TestUnitError(t *testing.T) {
+
+	// tests := []tester{
+	// 	{
+	// 		message: "hello, world!",
+	// 		pattern: fmt.Sprintf("test: pid=%s %s %s DEBUG: hello, world!\n$", rgxPID, rgxdate, rgxtime),
+	// 	},
+	// }
+	//
+	// for _, tc := range tests {
+	//
+	// 	var buf bytes.Buffer
+	//
+	// 	logger := log.NewLogger("test", &buf)
+	// 	logger.Debug(tc.message)
+	//
+	// 	act := buf.String()
+	//
+	// 	matched, err := regexp.MatchString(tc.pattern, act)
+	// 	test.Ok(t, err)
+	// 	test.Assert(t, matched, fmt.Sprintf("pattern match failed: %q", act))
+	//     }
+}
+
+func TestUnitFatal(t *testing.T) {
+
+	// tests := []tester{
+	// 	{
+	// 		message: "hello, world!",
+	// 		pattern: fmt.Sprintf("test: pid=%s %s %s DEBUG: hello, world!\n$", rgxPID, rgxdate, rgxtime),
+	// 	},
+	// }
+	//
+	// for _, tc := range tests {
+	//
+	// 	var buf bytes.Buffer
+	//
+	// 	logger := log.NewLogger("test", &buf)
+	// 	logger.Debug(tc.message)
+	//
+	// 	act := buf.String()
+	//
+	// 	matched, err := regexp.MatchString(tc.pattern, act)
+	// 	test.Ok(t, err)
+	// 	test.Assert(t, matched, fmt.Sprintf("pattern match failed: %q", act))
+	//     }
 }
