@@ -35,7 +35,6 @@ func TestUnit_LowerLevels(t *testing.T) {
 	for _, tc := range tests {
 
 		var buf bytes.Buffer
-
 		logger := log.NewLogger("test", &buf)
 		logger.SetLevel(tc.level)
 
@@ -62,6 +61,89 @@ func TestUnit_LowerLevels(t *testing.T) {
 
 		logged := buf.String() == ""
 		failMsg := fmt.Sprintf("logger.%s outputted log message when level is set to %v", tc.op, tc.level)
+		test.Assert(t, logged, failMsg)
+	}
+}
+
+func TestUnit_EqualLevels(t *testing.T) {
+
+	tests := []levelTester{
+		{log.DebugLevel, "Debug"},
+		{log.InfoLevel, "Infof"},
+		{log.WarnLevel, "Warn"},
+		{log.ErrorLevel, "Errorf"},
+	}
+
+	for _, tc := range tests {
+
+		var buf bytes.Buffer
+		logger := log.NewLogger("test", &buf)
+		logger.SetLevel(tc.level)
+
+		switch tc.op {
+		case "Debug":
+			logger.Debug("hello")
+		case "Debugf":
+			logger.Debugf("hello, %s", "world")
+		case "Info":
+			logger.Info("hello")
+		case "Infof":
+			logger.Infof("hello, %s", "world")
+		case "Warn":
+			logger.Warn("hello")
+		case "Warnf":
+			logger.Warnf("hello, %s", "world")
+		case "Error":
+			logger.Error("hello")
+		case "Errorf":
+			logger.Errorf("hello, %s", "world")
+		default:
+			t.Fatalf("unexpected op: %q", tc.op)
+		}
+
+		logged := buf.String() != ""
+		failMsg := fmt.Sprintf("logger.%s did not output log message when level is set to %v", tc.op, tc.level)
+		test.Assert(t, logged, failMsg)
+	}
+}
+
+func TestUnit_HigherLevels(t *testing.T) {
+
+	tests := []levelTester{
+		{log.DebugLevel, "Info"},
+		{log.InfoLevel, "Warnf"},
+		{log.WarnLevel, "Error"},
+	}
+
+	for _, tc := range tests {
+
+		var buf bytes.Buffer
+		logger := log.NewLogger("test", &buf)
+		logger.SetLevel(tc.level)
+
+		switch tc.op {
+		case "Debug":
+			logger.Debug("hello")
+		case "Debugf":
+			logger.Debugf("hello, %s", "world")
+		case "Info":
+			logger.Info("hello")
+		case "Infof":
+			logger.Infof("hello, %s", "world")
+		case "Warn":
+			logger.Warn("hello")
+		case "Warnf":
+			logger.Warnf("hello, %s", "world")
+		case "Error":
+			logger.Error("hello")
+		case "Errorf":
+			logger.Errorf("hello, %s", "world")
+		default:
+			t.Fatalf("unexpected op: %q", tc.op)
+		}
+
+		logged := buf.String() != ""
+		failMsg := fmt.Sprintf("logger.%s did not output log message when level is set to %v", tc.op, tc.level)
 		test.Assert(t, logged, failMsg)
 	}
 }
